@@ -1,14 +1,17 @@
 ---
-title: 单层神经网络1：线性回归
+title: "单层神经网络1：线性回归"
+author: "xht03"
 date: 2025-03-16 15:59:10
 tags:
 - labs
 - notes
 categories:
 - Deep Learning
+header-includes:
+- \usepackage{xeCJK}
 ---
 
-### 线性回归
+## 线性回归
 
 深度学习常需要解决的两类问题：**回归问题**和**分类问题**。回归问题在实际中很常⻅，如预测房屋价格、⽓温、销售额等连续值的问题。我们所说的图像分类、垃圾邮件识别、疾病检测等输出为离散值的问题则属于分类问题。
 
@@ -16,11 +19,11 @@ categories:
 
 ---
 
-### 线性回归模型
+## 线性回归模型
 
 我们以⼀个简单的房屋价格预测作为例⼦来解释线性回归的基本要素。
 
-设房屋面积为 $x_1$，房龄为 $x_2$，楼层为 $x_3$，售出价格为 $y$，我们希望建立一个基于输入 $x_1$，$x_2$，$x_3$ 来计算输出 $y$ 的数学模型，即：  
+设房屋面积为 $x_1$，房龄为 $x_2$，楼层为 $x_3$，售出价格为 $y$ ，我们希望建立一个基于输入 $x_1$，$x_2$，$x_3$ 来计算输出 $y$ 的数学模型，即：  
 
 $$
 \hat{y} = w_1 x_1 + w_2 x_2 + w_3 x_3 + b
@@ -33,13 +36,13 @@ $$
 
 - 这些参数 $\{w_1, w_2, b\}$ 统称为**模型参数（parameter）**；
 
-- $\hat{y}$ 是模型的预测值，而真实值为 $y$。
+- $\hat{y}$ 是模型的预测值，而真实值为 $y$ 。
 
 由于数据可能存在噪声，模型预测 $\hat{y}$ 和真实价格 $y$ 之间可能存在一定误差。
 
 ---
 
-### 模型训练
+## 模型训练
 
 沿用房价预测的例子，现在，我们需要通过数据来寻找特定的模型参数值，使模型在数据上的误差尽可能小。这个过程叫作**模型训练（model training）**。
 
@@ -65,7 +68,7 @@ $$
     l(y, \hat{y}) = \frac{1}{2} (y - \hat{y})^2
     $$
 
-    - 在训练模型时，我们希望找出一组模型参数，记为 $\{w_1, w_2, b\}$，来使训练样本的损失函数最小。
+    - 在训练模型时，我们希望找出一组模型参数，记为 $\{w_1, w_2, b\}$ ，来使训练样本的损失函数最小。
 
 3. 优化算法
 
@@ -77,7 +80,7 @@ $$
 
 ---
 
-### 小批量随机梯度下降
+## 小批量随机梯度下降
 
 它的算法很简单：
 
@@ -85,19 +88,17 @@ $$
 
 - 对参数进⾏多次迭代，使每次迭代都可能降低损失函数的值。
 
-- 在每次迭代中，先随机均匀采样⼀个由固定数⽬训练数据样本所组成的小批量（mini-batch）$\mathcal{B}$。然后求小批量中数据样本的平均损失有关模型参数的导数（梯度），最后⽤此结果与预先设定的⼀个正数的乘积作为模型参数在本次迭代的减小量。
+- 在每次迭代中，先随机均匀采样⼀个由固定数⽬训练数据样本所组成的小批量（mini-batch）$\mathcal{B}$ 。然后求小批量中数据样本的平均损失有关模型参数的导数（梯度），最后⽤此结果与预先设定的⼀个正数的乘积作为模型参数在本次迭代的减小量。
 
 它的迭代公式如下：
 
-$$
-w_1 \leftarrow w_1 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial w_1} \\
+$$w_1 \leftarrow w_1 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial w_1}$$
 
-w_2 \leftarrow w_2 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial w_2} \\
+$$w_2 \leftarrow w_2 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial w_2}$$
 
-w_3 \leftarrow w_3 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial w_3} \\
+$$w_3 \leftarrow w_3 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial w_3}$$
 
-b \leftarrow b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial b}
-$$
+$$b \leftarrow b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial l^{(i)}(w_1, w_2, b)}{\partial b}$$
 
 在上式中，$\mathcal{B}$ 代表每个小批量中的样本个数（批量⼤小，batch size），$\eta$ 称作学习率（learningrate）并取正数。需要强调的是，这⾥的批量⼤小和学习率的值是⼈为设定的，并不是通过模型训练学出的，因此叫作**超参数（hyperparameter）**。我们通常所说的“调参”指的正是调节超参数。
 
