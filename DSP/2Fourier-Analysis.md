@@ -20,11 +20,15 @@ header-includes:
 
 设它们的夹角为 $\theta$ ，$\vec{A_1}$ 在 $\vec{A_2}$ 上的投影为 $c_{12}\vec{A_2}$ 。则误差为：
 
-$$\vec{E} = \vec{A_1} - c_{12}\vec{A_2}$$
+$$
+\vec{E} = \vec{A_1} - c_{12}\vec{A_2}
+$$
 
 我们期望误差 $\vec{E}$ 最小化，即：$\|\vec{E}\|^2$ 最小化。为取到最小值，我们可以计算出$c_{12}$ 的值：
 
-$$\frac{d|\vec{E}|^2}{dc_{12}} = 0 \implies c_{12} = \frac{\vec{A_1} \cdot \vec{A_2}}{\|\vec{A_2}\|^2}$$
+$$
+\frac{d|\vec{E}|^2}{dc_{12}} = 0 \implies c_{12} = \frac{\vec{A_1} \cdot \vec{A_2}}{\|\vec{A_2}\|^2}
+$$
 
 所以，系数 $c_{12}$ 表征着 两个向量 $\vec{A_1}$ 和 $\vec{A_2}$ 的相似程度。
 
@@ -42,19 +46,27 @@ $$\frac{d|\vec{E}|^2}{dc_{12}} = 0 \implies c_{12} = \frac{\vec{A_1} \cdot \vec{
 
 我们希望用 $f_2(t)$ 来近似表示 $f_1(t)$ ，即：
 
-$$f_1(t) \approx c_{12}f_2(t) \quad t_1 < t < t_2$$
+$$
+f_1(t) \approx c_{12}f_2(t) \quad t_1 < t < t_2
+$$
 
 类似的，我们可以定义误差函数为：
 
-$$\epsilon(t) = f_1(t) - c_{12}f_2(t)$$
+$$
+\epsilon(t) = f_1(t) - c_{12}f_2(t)
+$$
 
 为了使 $f_1(t)$ 和 $f_2(t)$ 之间的误差最小化，我们使用**均方误差**：
 
-$$ \overline{\epsilon^2(t)} = \frac{1}{t_2 - t_1} \int_{t_1}^{t_2} \epsilon^2(t) dt = \frac{1}{t_2 - t_1} \int_{t_1}^{t_2} [f_1(t) - c_{12}f_2(t)]^2 dt$$
+$$
+\overline{\epsilon^2(t)} = \frac{1}{t_2 - t_1} \int_{t_1}^{t_2} \epsilon^2(t) dt = \frac{1}{t_2 - t_1} \int_{t_1}^{t_2} [f_1(t) - c_{12}f_2(t)]^2 dt
+$$
 
 我们对 $c_{12}$ 求导数并令其为零：
 
-$$\frac{d\overline{\epsilon^2(t)}}{dc_{12}} = 0 \implies c_{12} = \frac{\int_{t_1}^{t_2} f_1(t)f_2(t)dt}{\int_{t_1}^{t_2} f_2^2(t)dt}$$
+$$
+\frac{d\overline{\epsilon^2(t)}}{dc_{12}} = 0 \implies c_{12} = \frac{\int_{t_1}^{t_2} f_1(t)f_2(t)dt}{\int_{t_1}^{t_2} f_2^2(t)dt}
+$$
 
 与正交向量类似，系数 $c_{12}$ 表征着两个函数 $f_1(t)$ 和 $f_2(t)$ 的相似程度，称为 $f_1(t)$ 和 $f_2(t)$ 的**相关系数**。
 
@@ -64,7 +76,9 @@ $$\frac{d\overline{\epsilon^2(t)}}{dc_{12}} = 0 \implies c_{12} = \frac{\int_{t_
 
 在区间 $[t_1, t_2]$ 上，两个函数 $f_1(t)$ 和 $f_2(t)$ 是正交的，当且仅当：
 
-$$\int_{t_1}^{t_2} f_1(t)f_2(t)dt = 0$$
+$$
+\int_{t_1}^{t_2} f_1(t)f_2(t)dt = 0
+$$
 
 这里我们也可以看出，正交函数与正交向量的相似。如果把时间轴看作一个连续的“基底”（类似于向量空间中的坐标轴），那么一个函数 $f(t)$ 可以被看作在这个“基底”上定义的一个向量。在每个时间点 $t$ 上，$f(t)$ 的值可以看作这个“向量”的一个分量。因为时间轴是连续的，这个“向量”的分量是无穷多的（对应于 $t$ 的每个可能取值），而不是有限个。
 
@@ -91,7 +105,9 @@ $$
 
 任意一个函数 $g(t)$ 在区间 $[t_1, t_2]$ 上都可以用 $n$ 个正交函数的线性组合来近似表示：
 
-$$g(t) \approx c_1f_1(t) + c_2f_2(t) + \cdots + c_nf_n(t)$$
+$$
+g(t) \approx c_1f_1(t) + c_2f_2(t) + \cdots + c_nf_n(t)
+$$
 
 在均方误差最小的情况下，可求解系数 $c_i$ ：
 
@@ -117,7 +133,9 @@ $$
 
 在区间 $[t_1, t_2]$ 上，正交函数集 $\{f_1(t), f_2(t), \cdots, f_n(t)\}$ 近似表示任意一个函数 $g(t)$，如果：
 
-$$\lim_{n \to \infty} \overline{\epsilon^2(t)} = 0$$
+$$
+\lim_{n \to \infty} \overline{\epsilon^2(t)} = 0
+$$
 
 则称 $\{f_1(t), f_2(t), \cdots, f_n(t)\}$ 为**完备正交函数集**。其中 $\overline{\epsilon^2(t)}$ 是均方误差。
 
@@ -127,7 +145,9 @@ $$\lim_{n \to \infty} \overline{\epsilon^2(t)} = 0$$
 
 上面我们介绍了完备正交函数集。所谓完备是指对任意函数 $g(t)$ 都可以用一个无穷级数表示：
 
-$$g(t) = \sum_{i=1}^{\infty} c_if_i(t)$$
+$$
+g(t) = \sum_{i=1}^{\infty} c_if_i(t)
+$$
 
 这个级数收敛于 $g(t)$ ，上式也就是 $g(t)$ 的正交分解。
 
@@ -139,7 +159,9 @@ $$g(t) = \sum_{i=1}^{\infty} c_if_i(t)$$
 
 三角函数集是一个常用的完备正交函数集。
 
-$$\{cos(n\omega t) , \ sin(n\omega t) \mid n = 0, 1, 2, \cdots\} $$
+$$
+\{cos(n\omega t) , \ sin(n\omega t) \mid n = 0, 1, 2, \cdots\}
+$$
 
 在区间 $[t_0, t_0 + T]$ 上，上述无限个三角函数组成一个完备正交函数集。这里 $T$ 是周期，$T=\frac{2\pi}{\omega}$ 。
 
@@ -155,23 +177,33 @@ $$\{cos(n\omega t) , \ sin(n\omega t) \mid n = 0, 1, 2, \cdots\} $$
 
 我们考虑（其余情况类似）：
 
-$$\int_{t_0}^{t_0 + T} \cos(n\omega t) \cos(m\omega t) \, dt$$
+$$
+\int_{t_0}^{t_0 + T} \cos(n\omega t) \cos(m\omega t) \, dt
+$$
 
 使用和差化积公式：
 
-$$\int_{t_0}^{t_0 + T} \cos(n\omega t) \cos(m\omega t) \, dt = \frac{1}{2} \int_{t_0}^{t_0 + T} \left[ \cos((n + m)\omega t) + \cos((n - m)\omega t) \right] \, dt$$
+$$
+\int_{t_0}^{t_0 + T} \cos(n\omega t) \cos(m\omega t) \, dt = \frac{1}{2} \int_{t_0}^{t_0 + T} \left[ \cos((n + m)\omega t) + \cos((n - m)\omega t) \right] \, dt
+$$
 
 又有：
 
-$$\int_{t_0}^{t_0 + T} \cos((n + m)\omega t) \, dt = 0, \quad \int_{t_0}^{t_0 + T} \cos((n - m)\omega t) \, dt = 0 \quad (n \neq m)$$
+$$
+\int_{t_0}^{t_0 + T} \cos((n + m)\omega t) \, dt = 0, \quad \int_{t_0}^{t_0 + T} \cos((n - m)\omega t) \, dt = 0 \quad (n \neq m)
+$$
 
 因此：
 
-$$\int_{t_0}^{t_0 + T} \cos(n\omega t) \cos(m\omega t) \, dt = 0 \quad (n \neq m)$$
+$$
+\int_{t_0}^{t_0 + T} \cos(n\omega t) \cos(m\omega t) \, dt = 0 \quad (n \neq m)
+$$
 
 且不难证明，当 $n = m$ 时：
 
-$$\int_{t_0}^{t_0 + T} \cos^2(n\omega t) \, dt = \frac{T}{2}$$
+$$
+\int_{t_0}^{t_0 + T} \cos^2(n\omega t) \, dt = \frac{T}{2}
+$$
 
 2. 完备性
 
@@ -179,15 +211,21 @@ $$\int_{t_0}^{t_0 + T} \cos^2(n\omega t) \, dt = \frac{T}{2}$$
 
 我们需要证明任意平方可积的 $f(t)$ 可以写成：
 
-$$f(t) = \frac{a_0}{2} + \sum_{n=1}^\infty \left[ a_n \cos(n\omega t) + b_n \sin(n\omega t) \right]$$
+$$
+f(t) = \frac{a_0}{2} + \sum_{n=1}^\infty \left[ a_n \cos(n\omega t) + b_n \sin(n\omega t) \right]
+$$
 
 接下来，我们试着确定 $f(t)$ 系数 $a_n$ 和 $b_n$ 的值。
 
-$$\int_{t_0}^{t_0 + T} f(t) \, dt = \frac{a_0}{2} \cdot T + \sum_{n=1}^N \left[ a_n \cdot \int_{t_0}^{t_0 + T} \cos(n\omega t) \, dt + b_n \cdot \int_{t_0}^{t_0 + T} \sin(n\omega t) \, dt \right]$$
+$$
+\int_{t_0}^{t_0 + T} f(t) \, dt = \frac{a_0}{2} \cdot T + \sum_{n=1}^N \left[ a_n \cdot \int_{t_0}^{t_0 + T} \cos(n\omega t) \, dt + b_n \cdot \int_{t_0}^{t_0 + T} \sin(n\omega t) \, dt \right]
+$$
 
 由于 $\int_{t_0}^{t_0 + T} \cos(n\omega t) \, dt = 0$ 和 $\int_{t_0}^{t_0 + T} \sin(n\omega t) \, dt = 0$ ，所以：
 
-$$ a_0 = \frac{2}{T} \int_{t_0}^{t_0 + T} f(t) \, dt $$
+$$
+a_0 = \frac{2}{T} \int_{t_0}^{t_0 + T} f(t) \, dt 
+$$
 
 类似的，我们可以求出 $a_n$ 和 $b_n$ 的值：
 
@@ -202,21 +240,29 @@ $$
 
 则有：
 
-$$a_n = \frac{2}{T} \int_{t_0}^{t_0 + T} f(t) \cos(n\omega t) \, dt$$
+$$
+a_n = \frac{2}{T} \int_{t_0}^{t_0 + T} f(t) \cos(n\omega t) \, dt
+$$
 
 类似的，我们有：
 
-$$b_n = \frac{2}{T} \int_{t_0}^{t_0 + T} f(t) \sin(n\omega t) \, dt$$
+$$
+b_n = \frac{2}{T} \int_{t_0}^{t_0 + T} f(t) \sin(n\omega t) \, dt
+$$
 
 这里得到的 $f(t)$ 的展开式，其实就是之后我们要介绍的**傅里叶级数**。
 
 设函数 $s_N(t)$ 为：
 
-$$s_N(t) = \frac{a_0}{2} + \sum_{n=1}^N [ a_n \cos(n\omega t) + b_n \sin(n\omega t)]$$
+$$
+s_N(t) = \frac{a_0}{2} + \sum_{n=1}^N [ a_n \cos(n\omega t) + b_n \sin(n\omega t)]
+$$
 
 考虑 $f(t)$ 和 $s_N(t)$ 的平方误差：
 
-$$\int_{t_0}^{t_0 + T} \left| f(t) - s_N(t) \right|^2 \, dt$$
+$$
+\int_{t_0}^{t_0 + T} \left| f(t) - s_N(t) \right|^2 \, dt
+$$
 
 展开后：
 
@@ -290,15 +336,21 @@ $$
 
 根据欧拉公式：
 
-$$e^{j\theta} = \cos(\theta) + j\sin(\theta)$$
+$$
+e^{j\theta} = \cos(\theta) + j\sin(\theta)
+$$
 
 我们可以把傅里叶级数写成**复数形式**：
 
-$$f(t) = \sum_{n=-\infty}^{\infty} F_n e^{jn\omega t}$$
+$$
+f(t) = \sum_{n=-\infty}^{\infty} F_n e^{jn\omega t}
+$$
 
 其中：
 
-$$F_n = \frac{1}{T} \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt$$
+$$
+F_n = \frac{1}{T} \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt
+$$
 
 这里，复指数函数集 $\{e^{jn\omega t} \mid n = 0, \pm 1, \pm 2, \cdots\}$ 是一个完备正交函数集。我们就不加证明了。
 
@@ -312,7 +364,9 @@ $$F_n = \frac{1}{T} \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt$$
 
 $f(t)$ 的谱系数（即各个频率分量的系数）为：
 
-$$ F(n\omega) = \frac{1}{T} \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt $$
+$$
+F(n\omega) = \frac{1}{T} \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt 
+$$
 
 显然，当 $T \to \infty$ 时，$F(n\omega)$ 趋于 0 。所以，如果我们对非周期函数 $f(t)$ 进行傅里叶变换，能得到连续谱，但其幅度无限小。虽然各个频率分量的幅度无限小，但它们之间仍存在相对大小。所以我们引入**频谱密度函数**。
 
@@ -461,7 +515,9 @@ $$
 
 - 线性性质
 
-    $$ a_1f_1(t) + a_2f_2(t) \leftrightarrow a_1F_1(\omega) + a_2F_2(\omega) $$
+    $$
+    a_1f_1(t) + a_2f_2(t) \leftrightarrow a_1F_1(\omega) + a_2F_2(\omega)
+    $$
 
 - 时移性质
 
@@ -479,6 +535,10 @@ $$
 
     若 $f_1(t) \leftrightarrow F_1(\omega)$ ，$f_2(t) \leftrightarrow F_2(\omega)$ ，则：
 
-    $$ f_1(t) * f_2(t) \leftrightarrow F_1(\omega) \cdot F_2(\omega) $$
+    $$
+    f_1(t) * f_2(t) \leftrightarrow F_1(\omega) \cdot F_2(\omega)
+    $$
 
-    $$ f_1(t) \cdot f_2(t) \leftrightarrow \frac{1}{2\pi}F_1(\omega) * F_2(\omega) $$
+    $$
+    f_1(t) \cdot f_2(t) \leftrightarrow \frac{1}{2\pi}F_1(\omega) * F_2(\omega) 
+    $$

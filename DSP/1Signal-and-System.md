@@ -190,9 +190,13 @@ $$
 
 连续时间下，单位阶跃信号和单位冲激信号是**求导**关系；同样的，单位阶跃序列和单位采样序列也是**离散情况下**的求导关系，也就是**差分**的关系。
 
-$$\delta(n) = u(n) - u(n-1)$$
+$$
+\delta(n) = u(n) - u(n-1)
+$$
 
-$$u(n) = \sum_{k=-\infty}^{n} \delta(k)$$
+$$
+u(n) = \sum_{k=-\infty}^{n} \delta(k)
+$$
 
 这两个式子直观上也是很容易验证的。
 
@@ -211,7 +215,9 @@ $$
 
 矩形信号也可以用单位阶跃序列或单位采样序列表示：
 
-$$ R_N(n) = u(n) - u(n-N) = \sum_{k=0}^{N-1} \delta(n-k) $$
+$$
+R_N(n) = u(n) - u(n-N) = \sum_{k=0}^{N-1} \delta(n-k)
+$$
 
 ![](https://ref.xht03.online/202503251029180.png)
 
@@ -221,7 +227,9 @@ $$ R_N(n) = u(n) - u(n-N) = \sum_{k=0}^{N-1} \delta(n-k) $$
 
 **周期信号**是指经过一定时间重复出现的信号。
 
-$$ f(t) = f(t + kT) \quad k = 0, \pm 1, \pm 2, \cdots $$
+$$
+f(t) = f(t + kT) \quad k = 0, \pm 1, \pm 2, \cdots
+$$
 
 **非周期信号**在时间上不具有周而复始的特性，但我们可以将其看作是周期信号的特例，**周期趋于无穷大**。
 
@@ -229,7 +237,9 @@ $$ f(t) = f(t + kT) \quad k = 0, \pm 1, \pm 2, \cdots $$
 
 如果对所有整数 $n$ ，存在最小的正整数 $N$ 使得：
 
-$$ x(n) = x(n + N) \quad -\infty < n <\infty$$
+$$
+x(n) = x(n + N) \quad -\infty < n <\infty
+$$
 
 则称序列 $x(n)$ 为周期序列，$N$ 为序列的周期。
 
@@ -239,15 +249,30 @@ $$ x(n) = x(n + N) \quad -\infty < n <\infty$$
 
 对于连续时间信号 $f(t)$ ：
 
-- 能量：$$E = \lim_{T \to \infty}\int_{-T}^{T} f(t)^2 dt$$
+- 能量：
 
-- 功率：$$P = \lim_{T \to \infty}\frac{1}{2T}\int_{-T}^{T} f(t)^2 dt$$
+    $$
+    E = \lim_{T \to \infty}\int_{-T}^{T} f(t)^2 dt
+    $$
+- 功率：
+    
+    $$
+    P = \lim_{T \to \infty}\frac{1}{2T}\int_{-T}^{T} f(t)^2 dt
+    $$
 
 对于离散时间信号 $f(n)$ ：
 
-- 能量：$$E = \sum_{n=-\infty}^{\infty} f(n)^2$$
+- 能量：
 
-- 功率：$$P = \lim_{N \to \infty}\frac{1}{2N}\sum_{n=-N}^{N} f(n)^2$$
+    $$
+    E = \sum_{n=-\infty}^{\infty} f(n)^2
+    $$
+
+- 功率：
+    
+    $$
+    P = \lim_{N \to \infty}\frac{1}{2N}\sum_{n=-N}^{N} f(n)^2
+    $$
 
 ### 能量信号和功率信号
 
@@ -297,11 +322,15 @@ $$ x(n) = x(n + N) \quad -\infty < n <\infty$$
 
 - **线性系统**：满足齐次性和叠加性。
 
-    $$T[ae_1(t)+be_2(t)] = aT[e_1(t)] + bT[e_2(t)]$$
+    $$
+    T[ae_1(t)+be_2(t)] = aT[e_1(t)] + bT[e_2(t)]
+    $$
 
 - **时不变系统**：若构成系统的元件参数不随时间而变化，则称此系统为时不变系统。
 
-    $$r(t) = T[e(t)] \Rightarrow r(t-t_0) = T[e(t-t_0)]$$
+    $$
+    r(t) = T[e(t)] \Rightarrow r(t-t_0) = T[e(t-t_0)]
+    $$
 
 - 因果系统：系统在 $t_0$ 时刻的输出只取决于 $t \leq t_0$ 时刻的输入，而与 $t > t_0$ 时刻的输入无关。
 
@@ -375,7 +404,9 @@ $$
 
 因此，
 
-$$ y(t) = \int_{-\infty}^{\infty} x(\tau) h(t-\tau) d\tau = x(t)*h(t) $$
+$$
+y(t) = \int_{-\infty}^{\infty} x(\tau) h(t-\tau) d\tau = x(t)*h(t)
+$$
 
 ---
 
@@ -430,15 +461,21 @@ $$
 
 1. 交换律
 
-    $$(f_1*f_2)(t) = (f_2*f_1)(t)$$
+    $$
+    (f_1*f_2)(t) = (f_2*f_1)(t)
+    $$
 
 2. 结合律
 
-    $$(f_1*f_2)*f_3 = f_1*(f_2*f_3)$$
+    $$
+    (f_1*f_2)*f_3 = f_1*(f_2*f_3)
+    $$
 
 3. 分配律
 
-    $$f_1*(f_2+f_3) = f_1*f_2 + f_1*f_3$$
+    $$
+    f_1*(f_2+f_3) = f_1*f_2 + f_1*f_3
+    $$
 
 证明：
 
@@ -472,24 +509,34 @@ $$
 
     设 $y(t) = f_1(t)*f_2(t)$ ，则：
 
-    $$y(t) = f_1(t-t_0)*f_2(t+t_0)$$
+    $$
+    y(t) = f_1(t-t_0)*f_2(t+t_0)
+    $$
 
-    $$y(t-t_0) = f_1(t)*f_2(t-t_0) = f_1(t-t_0)*f_2(t)$$
+    $$
+    y(t-t_0) = f_1(t)*f_2(t-t_0) = f_1(t-t_0)*f_2(t)
+    $$
 
 ---
 
 5. 卷积的微分性质：两个函数卷积后的导数等于其中一函数之导数与另一函数之卷积。
 
-    $$\frac{dy(t)}{dt} = \frac{d}{dt}[f_1(t)*f_2(t)] = \frac{df_1(t)}{dt} * f_2(t) = f_1(t) * \frac{df_2(t)}{dt}$$
+    $$
+    \frac{dy(t)}{dt} = \frac{d}{dt}[f_1(t)*f_2(t)] = \frac{df_1(t)}{dt} * f_2(t) = f_1(t) * \frac{df_2(t)}{dt}
+    $$
 
 6. 卷积的积分性质：两个函数卷积后的积分等于其中一函数之积分与另一函数之卷积。
 
-    $$\int_{-\infty}^{t} y(\tau) d\tau = \int_{-\infty}^{t} [f_1(\tau)*f_2(\tau)] d\tau = f_1(\tau) * \int_{-\infty}^{t} f_2(\tau) d{\tau}$$
+    $$
+    \int_{-\infty}^{t} y(\tau) d\tau = \int_{-\infty}^{t} [f_1(\tau)*f_2(\tau)] d\tau = f_1(\tau) * \int_{-\infty}^{t} f_2(\tau) d{\tau}
+    $$
 
 7. 由性质 5 和 6 可得：
 
-    $$ y(t) = f_1(t) * f_2(t) = \frac{df_1(t)}{dt} * \int_{-\infty}^{t} f_2(\tau) d\tau$$
-
+    $$
+    y(t) = f_1(t) * f_2(t) = \frac{df_1(t)}{dt} * \int_{-\infty}^{t} f_2(\tau) d\tau
+    $$
+    
 证明：
 
 - 微分性质证明
