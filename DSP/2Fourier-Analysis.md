@@ -1,5 +1,5 @@
 ---
-title: "2 傅里叶级数"
+title: "2 傅里叶分析"
 author: "xht03"
 date: 2025-04-01 10:16:30
 tags:
@@ -269,7 +269,7 @@ $$
 
 ## 傅里叶级数
 
-傅里叶级数是一个重要的数学工具，它可以把一个周期函数表示为一组正弦和余弦函数的线性组合。傅里叶级数的基本思想是：任何一个周期函数都可以用一组正交函数（正弦和余弦函数）来表示。
+傅里叶级数是一个重要的数学工具，它可以把一个**周期函数**表示为一组正弦和余弦函数的**线性组合**。
 
 傅里叶级数的形式为：
 
@@ -302,6 +302,183 @@ $$F_n = \frac{1}{T} \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt$$
 
 这里，复指数函数集 $\{e^{jn\omega t} \mid n = 0, \pm 1, \pm 2, \cdots\}$ 是一个完备正交函数集。我们就不加证明了。
 
+---
 
+## 傅里叶变换
 
+傅里叶变换是一个重要的数学工具，它可以把一个**非周期函数**表示为一组正弦和余弦函数的**连续积分**。
 
+对于一个周期信号 $f(t)$ ，设其周期为 $T$ ，则其角频率为 $\omega = \frac{2\pi}{T}$ ，此时 $f(t)$ 包含的频率分量为 $\omega$ 的整数倍，在频谱上表现为一个个离散的谱线。当 $T \to \infty$ 时，$\omega \to 0$ ，频率分量变为连续的，频谱上表现为一个个连续的谱线。同时，当 $T \to \infty$ 时，$f(t)$ 变为一个**非周期信号**。
+
+$f(t)$ 的谱系数（即各个频率分量的系数）为：
+
+$$ F(n\omega) = \frac{1}{T} \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt $$
+
+显然，当 $T \to \infty$ 时，$F(n\omega)$ 趋于 0 。所以，如果我们对非周期函数 $f(t)$ 进行傅里叶变换，能得到连续谱，但其幅度无限小。虽然各个频率分量的幅度无限小，但它们之间仍存在相对大小。所以我们引入**频谱密度函数**。
+
+我们考虑：
+
+$$
+T F(n\omega) = \int_{t_0}^{t_0 + T} f(t) e^{-jn\omega t} \, dt
+$$
+
+而且，
+
+$$
+T F(n\omega) = \frac{F(n\omega)}{\frac{1}{T}} = \frac{F(n\omega)}{f}
+$$
+
+由此可见，$T F(n\omega)$ 表征着单位频带上的频谱值。因此我们可以把 $T F(n\omega)$ 看作是一个**频谱密度函数**，并记 $F(jn\omega) = T F(n\omega)$。
+
+由傅里叶级数的定义，我们可以得到：
+
+$$
+\begin{aligned}
+f(t) &= \sum_{n=-\infty}^{\infty} F(n\omega) e^{jn\omega t}\\
+&= \sum_{n=-\infty}^{\infty} \frac{F(jn\omega)}{T} e^{jn\omega t}\\
+\end{aligned}
+$$
+
+当 $T \to \infty$ 时，$\Delta(n\omega) = \omega \to d\omega$ ，$(n\omega) \to \omega$ ，所以：
+
+$$
+\begin{aligned}
+\lim_{T \to \infty} f(t) &= \lim_{T \to \infty} \sum_{n=-\infty}^{\infty} F(jn\omega) \frac{\omega}{2\pi} e^{jn\omega t}\\
+&= \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega) e^{j\omega t} d\omega\\
+\end{aligned}
+$$
+
+至此，我们就推导出了**傅里叶变换**的公式：
+
+$$
+F(jw) = \int_{-\infty}^{\infty} f(t) e^{-j\omega t} dt
+$$
+
+**傅里叶逆变换**的公式为：
+
+$$
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega) e^{j\omega t} d\omega
+$$
+
+$F(j\omega)$ 有时也简写为 $F(\omega)$ 。
+
+---
+
+## 傅里叶变换的物理意义
+
+由于 $f(t)$ 是实函数，所以 $F(\omega)$ 的虚部为零。
+
+$$
+\begin{aligned}
+f(t) &= \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{j\omega t} d\omega\\
+&= \frac{1}{2\pi} \int_{-\infty}^{\infty} |F(\omega)| cos(\omega t + \phi(\omega)) d\omega + j \frac{1}{2\pi} \int_{-\infty}^{\infty} |F(\omega)| sin(\omega t + \phi(\omega)) d\omega\\
+&= \frac{1}{2\pi} \int_{-\infty}^{\infty} |F(\omega)| cos(\omega t + \phi(\omega)) d\omega
+\end{aligned}
+$$
+
+所以我们得到：
+
+![](https://ref.xht03.online/202504121030427.png)
+
+这表明：一个非周期信号 $f(t)$ 可以看作是无穷多个振幅无穷小的连续余弦信号之和。
+
+---
+
+## 常见信号的傅里叶变换
+
+### 矩形信号
+
+$$
+\begin{aligned}
+F(\omega) &= \int_{-\frac{\tau}{2}}^{\frac{\tau}{2}} E e^{-j\omega t} dt\\
+&= \frac{E}{-j\omega} e^{-j\omega t} \bigg|_{-\frac{\tau}{2}}^{\frac{\tau}{2}}\\
+&= \frac{E}{-j\omega} \left( e^{j\frac{-\omega\tau}{2}} - e^{j\frac{\omega\tau}{2}} \right)\\
+&= \frac{E}{j\omega} \cdot 2j \sin\left( \frac{\omega\tau}{2} \right)\\
+&= \frac{2E}{\omega} \sin\left( \frac{\omega\tau}{2} \right)\\
+&= E\tau \cdot \frac{\sin\left( \frac{\omega\tau}{2} \right)}{\frac{\omega\tau}{2}}\\
+&= E\tau \cdot Sa(\frac{\omega\tau}{2})
+\end{aligned}
+$$
+
+其中 $Sa(x) = \frac{\sin(x)}{x}$ 。
+
+![](https://ref.xht03.online/202504121050823.png)
+
+---
+
+### 单位冲激信号
+
+$$
+F(\omega) = \int_{-\infty}^{\infty} \delta(t) e^{-j\omega t} dt = 1
+$$
+
+实际上，$\delta(t)$ 可以看作 $\tau \times \frac{1}{\tau}$ 的矩形脉冲，且 $\tau \to 0$ 。
+
+![](https://ref.xht03.online/202504121036688.png)
+
+---
+
+### 直流信号
+
+直流信号可以看作是一个矩形脉冲，只不过 $\tau \to \infty$ 。
+
+$$
+\begin{aligned}
+F(\omega) &= \int_{-\infty}^{\infty} E \delta(t) e^{-j\omega t} dt\\
+&= \lim_{\tau \to \infty} \int_{-\tau}^{tau} E e^{-j\omega t} dt\\
+&= E \lim_{\tau \to \infty} \frac{2sin(\omega\tau)}{\omega}\\
+&= 2 \pi E \delta(\omega)
+\end{aligned}
+$$
+
+这里我们用到了 $\lim_{\tau \to \infty} \frac{\sin(\omega \tau)}{\pi \omega} = \delta(\omega)$ ，这里我们就不加证明的使用了。
+
+![](https://ref.xht03.online/202504121107115.png)
+
+---
+
+## 傅里叶变换的性质
+
+当 $f(t)$ 为**实函数**时：
+
+$$
+\begin{aligned}
+F(\omega) &= \int_{-\infty}^{\infty} f(t) e^{-j\omega t} dt\\
+&= \int_{-\infty}^{\infty} f(t) \left( \cos(\omega t) - j\sin(\omega t) \right) dt\\
+&= R(\omega) - jI(\omega)\\
+\end{aligned}
+$$
+
+我们记：$F(\omega) = |F(\omega)| e^{j\phi(\omega)}$ 。
+
+那么不难得到：
+
+- $|F(\omega)|$ 是关于 $\omega$ 的偶函数。
+
+- $\phi(\omega) = -arctan\frac{I(\omega)}{R(\omega)}$ 是关于 $\omega$ 的奇函数。
+
+除此以外，傅里叶变换还具有以下基本性质：
+
+- 线性性质
+
+    $$ a_1f_1(t) + a_2f_2(t) \leftrightarrow a_1F_1(\omega) + a_2F_2(\omega) $$
+
+- 时移性质
+
+    若 $f(t) \leftrightarrow F(\omega)$ ，则：$f(t - t_0) \leftrightarrow e^{-j\omega t_0}F(\omega)$
+
+- 频移性质
+
+    若 $f(t) \leftrightarrow F(\omega)$ ，则：$f(t)e^{j\omega_0 t} \leftrightarrow F(\omega - \omega_0)$
+
+- 频域缩放性质
+
+    若 $f(t) \leftrightarrow F(\omega)$ ，则：$f(at) \leftrightarrow \frac{1}{|a|}F\left( \frac{\omega}{a} \right)$
+
+- **卷积定理**
+
+    若 $f_1(t) \leftrightarrow F_1(\omega)$ ，$f_2(t) \leftrightarrow F_2(\omega)$ ，则：
+
+    $$ f_1(t) * f_2(t) \leftrightarrow F_1(\omega) \cdot F_2(\omega) $$
+
+    $$ f_1(t) \cdot f_2(t) \leftrightarrow \frac{1}{2\pi}F_1(\omega) * F_2(\omega) $$
