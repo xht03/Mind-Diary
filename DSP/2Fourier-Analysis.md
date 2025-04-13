@@ -542,3 +542,215 @@ $$
     $$
     f_1(t) \cdot f_2(t) \leftrightarrow \frac{1}{2\pi}F_1(\omega) * F_2(\omega) 
     $$
+
+---
+
+## 离散时间傅里叶变换
+
+上述考虑的是连续时间下的傅里叶变换。我们现在考虑**离散时间**下的傅里叶变换。
+
+对于**非周期信号** $x(n)$ 的离散时间傅里叶变换（DTFT）为：
+
+$$
+X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x(n) e^{-j\omega n}
+$$
+
+这里 $X(e^{j\omega})$ 是一个复数函数，称为**频谱**。它是一个周期为 $2\pi$ 的周期函数。
+
+离散时间傅里叶变换的**逆变换**为：
+
+$$
+x(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{j\omega}) e^{j\omega n} d\omega
+$$
+
+---
+
+## DTFT 性质
+
+离散时间傅里叶变换具有以下性质（与连续时间傅里叶变换类似）：
+
+- 线性性质
+
+$$
+a_1x_1(n) + a_2x_2(n) \leftrightarrow a_1X_1(e^{j\omega}) + a_2X_2(e^{j\omega})
+$$
+
+- 时移性质
+
+    若 $x(n) \leftrightarrow X(e^{j\omega})$ ，则：$x(n - n_0) \leftrightarrow e^{-j\omega n_0}X(e^{j\omega})$
+
+- 频移性质
+
+    若 $x(n) \leftrightarrow X(e^{j\omega})$ ，则：$x(n)e^{j\omega_0 n} \leftrightarrow X(e^{j(\omega - \omega_0)})$
+
+- 卷积性质
+
+    若 $x_1(n) \leftrightarrow X_1(e^{j\omega})$ ，$x_2(n) \leftrightarrow X_2(e^{j\omega})$ ，则：
+
+$$
+x_1(n) * x_2(n) \leftrightarrow X_1(e^{j\omega}) \cdot X_2(e^{j\omega})
+$$
+
+$$
+x_1(n) \cdot x_2(n) \leftrightarrow \frac{1}{2\pi}X_1(e^{j\omega}) * X_2(e^{j\omega})
+$$
+
+---
+
+## 频率响应
+
+傅里叶变换将一个信号从时域变换到频域。在时域上，我们用**冲激响应**来描述一个系统的特性；在频域上，我们用**频率响应**来描述一个系统的特性。
+
+这么做的原因（与时域上的冲激响应类似）是：通过傅里叶变化，一个信号可以看作是无穷多个正弦信号的叠加。所以对于**线性时不变系统**，我们只需要知道系统对正弦信号的响应，就可以知道系统对任意信号的响应。
+
+![](https://ref.xht03.online/202504131027226.png)
+
+我们考虑输入信号 $x(n)$ 和输出信号 $y(n)$ ，且 $x(n) = e^{j\omega n}$ 。
+
+那么系统的输出信号为：
+
+$$
+\begin{aligned}
+y(n) &= h(n) * x(n)\\
+&= \sum_{k=-\infty}^{\infty} h(k) x(n - k)\\
+&= \sum_{k=-\infty}^{\infty} h(k) e^{j\omega(n - k)}\\
+&= e^{j\omega n} \sum_{k=-\infty}^{\infty} h(k) e^{-j\omega k}\\
+&= e^{j\omega n} H(e^{j\omega})\\
+&= H(e^{j\omega}) x(n)
+\end{aligned}
+$$
+
+这里 $H(e^{j\omega})$ 称为**频率响应**。它定义了一个复指数信号 $e^{j\omega n}$ 经过系统后的幅值变化。
+
+$$
+\begin{aligned}
+H(e^{j\omega}) &= \sum_{k=-\infty}^{\infty} h(k) e^{-j\omega k}\\
+&= |H(e^{j\omega})| e^{j\phi(\omega)}
+\end{aligned}
+$$
+
+其中，
+
+$$
+\phi(\omega) = -arctan\frac{I(H(e^{j\omega}))}{R(H(e^{j\omega}))}
+$$
+
+$$
+\tau(\omega) = \frac{d\phi(\omega)}{d\omega} \text{称为群延迟}
+$$
+
+---
+
+## 离散傅里叶变换
+
+当我们使用计算机进行数字信号处理时：
+
+- 计算机只能处理有限个数据点。
+
+- 计算机只能处理有限个频率分量。
+
+所以，在实际应用中，我们一定是对**离散时间**，且**有限长度**的信号进行傅里叶变换。我们称之为**离散傅里叶变换**（DFT）。
+
+需要先指出的是，离散傅里叶变换（DFT）是对离散时间傅里叶变换（DTFT）的一个近似。DFT 是对 DTFT 的一个有限采样。
+
+DTFT 是一个连续的函数，而无限多个频率分量无法被计算机存储。而 DFT 是一个离散的函数。
+
+---
+
+DFT 的定义为：
+
+1. 将有限长序列 $x(n)$ ，$n = 0, 1, \cdots, N - 1$ ，拓展成**周期函数** $\tilde{x}(n)$ 。
+
+$$
+\tilde{x}(n) = \sum_{r=-\infty}^{\infty} x(n+rN) = x((n))_{N}\ , \quad ((n))_{N} = n \mod N
+$$
+
+2. 计算 DFT：
+
+$$
+\begin{aligned}
+X[k] &= \sum_{n=0}^{N-1} x(n) e^{-j\frac{2\pi}{N}nk} \quad (k = 0, 1, \cdots, N - 1)\\
+&= \sum_{n=0}^{N-1} x(n) W_N^{nk} \quad (W_N = e^{-j\frac{2\pi}{N}}\ \text{为N阶单位根})
+\end{aligned}
+$$
+
+3. 计算 IDFT：
+
+$$
+\begin{aligned}
+x(n) &= \frac{1}{N} \sum_{k=0}^{N-1} X[k] e^{j\frac{2\pi}{N}nk} \quad (n = 0, 1, \cdots, N - 1)\\
+&= \frac{1}{N} \sum_{k=0}^{N-1} X[k] W_N^{-nk}
+\end{aligned}
+$$
+
+---
+
+## DFT 性质
+
+DFT 具有以下性质：
+
+1. 线性
+
+$$
+ax_1(n) + bx_2(n) \leftrightarrow aX_1[k] + bX_2[k]
+$$
+
+2. 对称性
+
+设 $x(n)$ 是长度为 $N$ 的是序列，则：
+
+$$
+X[k] = X^*[N - k] \quad (k = 0, 1, \cdots, N - 1)
+$$
+
+其中 $X^*$ 是 $X$ 的共轭。
+
+3. 圆周移位
+
+$$
+x((n - n_0))_N \leftrightarrow X[k] W_N^{-kn_0} \quad (n_0 = 0, 1, \cdots, N - 1)
+$$
+
+![](https://ref.xht03.online/202504131104011.png)
+
+4. 圆周卷积
+
+设 $x(n)$ 和 $h(n)$ 是长度为 $N$ 的序列，则：
+
+$$
+y(n) = x(n) * h(n) = \left[\sum_{m=0}^{N-1} \tilde{h}(m) \tilde{x}(n - m)\right] R_N(n)
+$$
+
+其中 $R_N(n)$ 是长度为 $N$ 的矩形波。
+
+---
+
+## 总结
+
+在此，我们对各种傅里叶级数、变换做个总结。
+
+- 傅里叶级数用于处理**周期信号**，可以分为
+
+  - 连续时间傅里叶级数（CTFS）
+
+  - 离散时间傅里叶级数（DTFS）
+
+- 傅里叶变换用于处理**非周期信号**，可以分为
+
+    - 连续时间傅里叶变换（CTFT）
+    
+    - 离散时间傅里叶变换（DTFT）
+
+那么，聪明如你可能会问：离散傅里叶变换（DFT）是什么呢？
+
+离散傅里叶变换（DFT）在延拓后是一个周期信号，所以 **DFT 本质上是 DFS** 。
+
+由于：周期函数分解的正弦波线性组合，各个频率分量都是 $\omega$ 的整数倍，所以：
+
+- 傅里叶级数的结果是**离散的**。（或者说，周期函数的频谱是离散的）
+
+- 傅里叶变换的结果是**连续的**。（或者说，非周期函数的频谱是连续的）
+
+---
+
+## 快速傅里叶变换
