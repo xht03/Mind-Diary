@@ -117,12 +117,93 @@ Nyquist 采样定理表述如下：
 
 当 $\omega_M \leq \frac{\omega_s}{2}$ 时，实信号 $x(t)$ 频谱采样之后不会发生重叠，可以用理想低通滤波器取出该信号。
 
-需要注意的是，采样定理并不是充分必要条件。也就是说，$\omega_s \lt 2\omega_M$ 时，也可能不会发生重叠。
+---
 
-比如，对于实值带通信号 $x(t)$ ，
+需要注意的是，采样定理并不是充要条件。也就是说，$\omega_s \lt 2\omega_M$ 时，也可能不会发生重叠。
+
+比如，对于**实值带通信号** $x(t)$ ，假设：
+
+- 带宽 $B = f_2 - f_1$
+
+- 中心频率 $f_c = \frac{f_1 + f_2}{2}$
+
+如果 $f_c \gt \frac{B}{2}$ ，且 $f_2$ 是带宽 $B$ 的整数倍，则当采样频率 $f_s = 2B$ 时，采样后的频谱不会发生混叠。
+
+![](https://ref.xht03.online/202504211012569.png)
+
+所以，采样定理的实质是：原信号在采样后，周期延拓之后，选取合适的采样频率，使得频谱不会发生重叠。
 
 ---
 
+## 频域采样
 
+连续时间信号的傅里叶变换（FT）或离散时间信号的DTFT（离散时间傅里叶变换）的频谱是连续的，但是计算机只能处理离散数据。因此，我们需要对频谱进行采样。频域采样的过程称为**频域采样**。
 
+设连续信号 $f(t) \xrightarrow{FT} F(\omega)$ ，其频谱 $F(\omega)$ 是连续的。
+
+若我们知道完整的频谱 $F(\omega)$ ，则毫无疑问地，我们可以复原出原信号 $F(\omega) \xrightarrow{IFT} f(t)$ 。
+
+但是，计算机只能处理有限个离散值，因此我们已知的频谱一定是采样后的离散值 $ F_1(\omega) = F(\omega) \cdot \delta_{\omega_1}(\omega)$ 。
+
+其中，
+
+- $\omega_1$ 是采样频率
+
+- 理想采样信号： 
+  $$
+  \delta_{\omega_1}(\omega) = \sum_{n=-\infty}^{+\infty} \delta(\omega - n\omega_1) \xrightarrow{IFT} \frac{1}{\omega_1} \delta_{T_1}(t)
+  $$
+
+  其中 $\delta_T(t)$ 是时域中以 $T_1 = \frac{2\pi}{\omega_1}$ 为周期的冲激串：
+
+  $$
+  \delta_{T_1}(t) = \sum_{k=-\infty}^{+\infty} \delta(t - kT_1)
+  $$
+
+因此，我们有：
+
+$$
+F_1(\omega) = F(\omega) \cdot \delta_{\omega_1}(\omega) \xrightarrow{IFT} f_1(t) = f(t) * \delta_T(t)
+$$
+
+那么，
+
+$$
+\begin{aligned}
+f_1(t) &= f(t) * \frac{1}{\omega_1} \sum_{k=-\infty}^{+\infty} \delta(t - kT_1)\\
+&= \frac{1}{\omega_1} \sum_{k=-\infty}^{+\infty} f(t - kT_1)
+\end{aligned}
+$$
+
+其中 $T_1 = \frac{2\pi}{\omega_1}$ 是采样周期。
+
+也就是：采样后的信号 $f_1(t)$ 是原信号 $f(t)$ 的周期延拓。
+
+- 频域采样，时域上周期延拓。
+
+- 时域采样，频域上周期延拓。
+
+---
+
+## 频域采样定理
+
+我们假设 $f(t)$ 是一个时限信号。也就是：$|t| \gt T_0$ 时 $f(t)=0$ 。
+
+与时域上的采样定理类似，其本质也是为了避免信号混叠。所以，
+
+$$
+2 T_0 \leq T_1 = \frac{2\pi}{\omega_1}
+$$
+
+也就是：
+
+$$
+\omega_1 \leq \frac{\pi}{T_0}
+$$
+
+这就是频域采样定理。
+
+频域采样定理表明：在频域上采样的频率不能超过 $\pi/T_0$ 。
+
+---
 
