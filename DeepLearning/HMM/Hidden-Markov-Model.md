@@ -225,6 +225,20 @@ $$
 
 Baum-Welch 算法是 HMM 的**无监督学习算法**，用于在仅知道观测序列的情况下，估计模型参数（转移矩阵、发射矩阵、初始状态分布）。它是**期望最大化（EM）算法**在 HMM 中的具体实现。
 
+给定观察值序列 $O$ ，我们希望确定一个模型 参数 $\lambda = (A, B, \Pi)$ ，使得 $P(O|\lambda)$ 最大。
+
+$$
+P(O|\lambda) = \sum_{Q} P(O, Q|\lambda) = \sum_{Q} P(O|Q, \lambda) P(Q|\lambda)
+$$
+
+其中 $Q$ 是所有可能的隐藏状态序列。由于直接计算 $P(O\mid\lambda)$ 涉及对所有可能的 $Q$ 求和，计算复杂度 $O(N^T)$ ，不可行，Baum-Welch 算法通过 ​EM 框架间接优化它。
+
+EM 算法保证：（假设 $\lambda^{(t)}$ 是第 $t$ 次迭代的参数）
+
+$$
+P(O|\lambda^{(t+1)}) \ge P(O|\lambda^{(t)}) \iff log P(O|\lambda^{(t+1)}) \ge log P(O|\lambda^{(t)})
+$$
+
 Baum-Welch 算法通过以下两步迭代优化参数：
 
 1. **E步（Expectation）**：基于当前参数计算隐藏状态的期望统计量（利用前向-后向算法）。
@@ -285,42 +299,9 @@ Baum-Welch 算法通过以下两步迭代优化参数：
 
    重复 E步 和 M步，直到：
 
-   - 对数似然 \( \log P(O \mid \lambda) \) 收敛。
+   - 对数似然 $\log P(O \mid \lambda)$ 收敛。
 
    - 参数变化小于阈值。
-
----
-
-如果我们从最大似然估计角度观察，Baum-Welch 就是 EM 算法的特例：
-
-- 最大似然估计：
-
-  $$
-  L(\lambda, \lambda') = \sum_{Q} P(Q \mid O, \lambda') \log P(O, Q \mid \lambda)
-  $$
-
-  其中：
-  - $\lambda$ ：当前待优化的模型参数（包括 $A, B, \pi$ ）。
-
-  - $\lambda'$ ：上一轮迭代的模型参数（已知的旧参数）。
-
-  - $Q$ ：所有可能的隐藏状态序列（如 $Q = (s_1, s_2, ..., s_T)$ ）。
-
-  - $O$ ：观测序列（如 $O = (o_1, o_2, ..., o_T)$ ）。
-
-  - $P(Q \mid O, \lambda')$ ：在旧参数 $\lambda'$  下，给定观测序列 $O$  时隐藏序列 $Q$ 的后验概率。
-  
-  - $P(O, Q \mid \lambda)$ ：在新参数 $\lambda$  下，观测序列 $O$  和隐藏序列 $Q$ 的联合概率。
-
-
-
-
-- **E步**：计算 $P(Q \mid O, \lambda')$（即 $\gamma_t(i) $ 和 $p_t(i,j)$ ）。
-
-- **M步**：最大化 $Q $ 函数更新 $\lambda $。
-
----
-
 
 
 
